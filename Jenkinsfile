@@ -6,11 +6,11 @@ pipeline {
             steps {
                 script {
                     withCredentials([usernamePassword(credentialsId: 'DockerHub-schalda1', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-                        sh '''
-                            export DOCKER_HOST=tcp://host.docker.internal:2375
-                            docker login -u $USERNAME -p $PASSWORD
-                            docker push mosazhaw/node-web-app
-                        '''
+                       sh '''
+                                export DOCKER_HOST=tcp://host.docker.internal:2375
+                                docker login -u $USERNAME -p $PASSWORD
+                                docker push schalda1/node-web-app
+                            '''
                     }
                 }
             }
