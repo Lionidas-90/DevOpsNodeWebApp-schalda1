@@ -13,7 +13,7 @@ app.get('/', (req, res) => {
   res.send(`
     <html>
       <body style="font-family: sans-serif; padding: 2rem;">
-        <h1>Hello FS2026 DevOps Course! : )</h1>
+        <h1>Hello FS2026 DevOps Course! 😎</h1>
         <p>Container ID: <strong>${hostname}</strong></p>
       </body>
     </html>
