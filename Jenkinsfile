@@ -2,27 +2,33 @@ pipeline {
     agent any
 
     stages {
-        stage('Docker Push') {
+        stage('Docker Build & Push') {
             steps {
                 script {
-                    withCredentials([usernamePassword(credentialsId: 'DockerHub-schalda1', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-                       sh '''
-                                export DOCKER_HOST=tcp://host.docker.internal:2375
-                                docker login -u $USERNAME -p $PASSWORD
-                                docker push schalda1/node-web-app
-                            '''
+                    withCredentials([usernamePassword(
+                        credentialsId: 'DockerHub-schalda1',
+                        usernameVariable: 'USERNAME',
+                        passwordVariable: 'PASSWORD'
+                    )]) {
+                        sh '''
+                            export DOCKER_HOST=tcp://host.docker.internal:2375
+                            docker login -u $USERNAME -p $PASSWORD
+                            docker build -t schalda1/node-web-app .
+                            docker push schalda1/node-web-app
+                        '''
                     }
                 }
             }
         }
+
         stage('Trigger Render Deployment') {
             steps {
                 script {
                     withCredentials([string(credentialsId: 'RenderDeployKey', variable: 'KEY')]) {
-                        sh "curl https://api.render.com/deploy/$KEY"
+                        sh 'curl https://api.render.com/deploy/$KEY'
                     }
                 }
             }
-        }        
+        }
     }
 }
