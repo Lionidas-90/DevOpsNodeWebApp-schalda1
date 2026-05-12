@@ -6,6 +6,9 @@ on:
     branches:
       - 'release'
 
+env:
+  AZURE_WEBAPP_NAME: devops-schalda1-helloworld
+
 jobs:
   docker-build-and-push:
     runs-on: ubuntu-latest
